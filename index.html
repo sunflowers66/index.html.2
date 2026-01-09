@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Deret Aritmatika</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family: Arial, sans-serif;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background: linear-gradient(180deg,#f5efe6,#e7d8c9);
+  display:flex;
+  justify-content:center;
+  padding:20px;
+}
+
+.app{
+  width:100%;
+  max-width:420px;
+  background:#fffaf3;
+  border-radius:28px;
+  padding:22px;
+  box-shadow:0 18px 40px rgba(120,90,60,0.25);
+}
+
+.header{
+  text-align:center;
+  margin-bottom:18px;
+}
+
+.header h1{
+  font-size:22px;
+  color:#6b4a34;
+}
+
+.header p{
+  font-size:13px;
+  color:#8b6a55;
+}
+
+.menu{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  margin-bottom:18px;
+}
+
+.menu button{
+  border:none;
+  border-radius:20px;
+  padding:14px;
+  font-size:14px;
+  font-weight:bold;
+  background:#f0e0cf;
+  color:#6b4a34;
+  cursor:pointer;
+}
+
+.menu button:hover{
+  background:#e3cdb7;
+}
+
+.card{
+  background:#f6ebdf;
+  border-radius:26px;
+  padding:20px;
+}
+
+.card h2{
+  margin-top:0;
+  font-size:20px;
+  color:#5a3d2b;
+}
+
+.box{
+  background:#ffffff;
+  border-radius:20px;
+  padding:16px;
+  font-size:14px;
+  color:#5a3d2b;
+  line-height:1.6;
+}
+
+input{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  border-radius:12px;
+  border:1px solid #d8c1ab;
+}
+
+button.calc{
+  margin-top:12px;
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:14px;
+  background:#c9a27e;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button.calc:hover{
+  background:#b18b69;
+}
+
+.hasil{
+  margin-top:12px;
+  font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <div class="header">
+    <h1>📐 Deret Aritmatika</h1>
+    <p>Matematika – Kelas XII TKJ</p>
+  </div>
+
+  <div class="menu">
+    <button onclick="materi()">📘 Materi</button>
+    <button onclick="simulasi()">🧮 Simulasi</button>
+    <button onclick="kuis()">🎯 Kuis</button>
+    <button onclick="info()">ℹ️ Info</button>
+  </div>
+
+  <div class="card">
+    <h2 id="judul">📘 Materi</h2>
+    <div class="box" id="konten">
+      Deret aritmatika adalah penjumlahan seluruh suku dari barisan aritmatika
+      yang memiliki beda tetap.
+      <br><br>
+      <b>Rumus 1 (jika suku ke-n sudah diketahui):</b><br>
+      Sn = n/2 (a + Un)
+      <br><br>
+      <b>Rumus 2 (jika beda diketahui):</b><br>
+      Sn = n/2 (2a + (n − 1)b)
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ===== MATERI ===== */
+function materi(){
+  document.getElementById("judul").innerText="📘 Materi";
+  document.getElementById("konten").innerHTML=
+  "Deret aritmatika adalah jumlah seluruh suku pada barisan aritmatika.<br><br>"+
+  "<b>Rumus 1:</b><br>Sn = n/2 (a + Un)<br>"+
+  "Digunakan jika suku ke-n sudah diketahui.<br><br>"+
+  "<b>Rumus 2:</b><br>Sn = n/2 (2a + (n − 1)b)<br>"+
+  "Digunakan jika beda diketahui.";
+}
+
+/* ===== SIMULASI ===== */
+function simulasi(){
+  document.getElementById("judul").innerText="🧮 Simulasi";
+  document.getElementById("konten").innerHTML=
+  "Suku pertama (a):<input id='a'>"+
+  "Beda (b):<input id='b'>"+
+  "Jumlah suku (n):<input id='n'>"+
+  "<button class='calc' onclick='hitung()'>Hitung</button>"+
+  "<div class='hasil' id='hasil'></div>";
+}
+
+function hitung(){
+  let a=parseInt(document.getElementById("a").value);
+  let b=parseInt(document.getElementById("b").value);
+  let n=parseInt(document.getElementById("n").value);
+
+  if(isNaN(a)||isNaN(b)||isNaN(n)){
+    document.getElementById("hasil").innerText="⚠️ Isi semua dulu";
+    return;
+  }
+
+  let Sn=n*(2*a+(n-1)*b)/2;
+  document.getElementById("hasil").innerText="✅ Hasil deret = "+Sn;
+}
+
+/* ===== KUIS ACAK ===== */
+let soal = [
+  {a:5,b:2,n:14,j:252},
+  {a:3,b:4,n:10,j:210},
+  {a:2,b:3,n:8,j:104},
+  {a:4,b:5,n:6,j:114}
+];
+
+let current;
+
+function kuis(){
+  acakSoal();
+}
+
+function acakSoal(){
+  current = soal[Math.floor(Math.random()*soal.length)];
+  document.getElementById("judul").innerText="🎯 Kuis";
+  document.getElementById("konten").innerHTML=
+  "Diketahui:<br>"+
+  "a = "+current.a+", b = "+current.b+", n = "+current.n+"<br><br>"+
+  "Hitung jumlah deret aritmatika!"+
+  "<input id='jawaban' placeholder='Masukkan jawaban'>"+
+  "<button class='calc' onclick='cekJawaban()'>Cek Jawaban</button>"+
+  "<div class='hasil' id='hasilKuis'></div>";
+}
+
+function cekJawaban(){
+  let j=document.getElementById("jawaban").value;
+  if(j==current.j){
+    document.getElementById("hasilKuis").innerText="🎉 Benar! Soal diacak ulang...";
+    setTimeout(acakSoal,1000);
+  }else{
+    document.getElementById("hasilKuis").innerText="❌ Salah, coba lagi";
+  }
+}
+
+/* ===== INFO ===== */
+function info(){
+  document.getElementById("judul").innerText="ℹ️ Info Kelompok";
+  document.getElementById("konten").innerHTML=
+  "<b>Kelas:</b> XII TKJ<br><br>"+
+  "<b>Nama Kelompok:</b><br>"+
+  "1. Asmiarti<br>"+
+  "2. Yulia Amanda<br>"+
+  "3. Zasqiah Dwi Lestari";
+}
+</script>
+
+</body>
+</html>
